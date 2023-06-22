@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import { ProductContext } from "../../context/ProductProvider";
 import { numberWithCommas } from "../../utils";
+import Button from "../../components/Button";
 
 export default function Detail() {
   const { product } = useContext(ProductContext);
@@ -30,9 +31,7 @@ export default function Detail() {
         </p>
         <p className="font-medium mt-4 text-lg">{item?.desc}</p>
         <p className="font-medium mt-4 text-lg">{item?.content}</p>
-        <button className="mt-8 py-4 px-8 font-semibold text-white bg-black text-center rounded-md">
-          ADD TO CART
-        </button>
+        <Button>ADD TO CART</Button>
       </div>
     </div>
   );
