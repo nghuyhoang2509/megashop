@@ -36,14 +36,16 @@ const cartSlice = createSlice({
         state.cart[product.id].qtyOrder += 1;
       }
       state.length += 1;
-      state.total += product.price;
+      state.total +=
+        product.salesPrice == null ? product.price : product.salesPrice;
     });
     builder.addCase(reduceProductToCart, (state, action) => {
       const product = action.payload;
       if (state.cart[product.id] && state.cart[product.id].qtyOrder != 1) {
         state.cart[product.id].qtyOrder -= 1;
         state.length -= 1;
-        state.total -= product.price;
+        state.total -=
+          product.salesPrice == null ? product.price : product.salesPrice;
       }
     });
     builder.addCase(deleteProductToCart, (state, action) => {
@@ -51,7 +53,9 @@ const cartSlice = createSlice({
       const { [product.id]: productDelete, ...newCart } = state.cart;
       state.cart = newCart;
       state.length -= productDelete.qtyOrder;
-      state.total -= productDelete.price * productDelete.qtyOrder;
+      state.total -=
+        (product.salesPrice == null ? product.price : product.salesPrice) *
+        productDelete.qtyOrder;
     });
     builder.addCase(addProductAndSave.fulfilled, (state, action) => {});
   },

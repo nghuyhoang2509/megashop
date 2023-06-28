@@ -18,7 +18,7 @@ export default function Detail() {
 
   return (
     <div className="flex flex-col">
-      <div className="text-blue-600 font-semibold text-md cursor-pointer">
+      <div className="text-blue-600 max-md:ml-2 font-semibold text-md cursor-pointer">
         <Link to={"/product"} className="mr-3 underline">
           All
         </Link>
@@ -30,14 +30,14 @@ export default function Detail() {
           {product?.data?.categories?.name}
         </Link>
       </div>
-      <div className="flex flex-row mt-8">
+      <div className="flex flex-row max-md:flex-col mt-8">
         {product?.loading ? (
           <Loading />
         ) : (
           <>
             {product?.data?.id ? (
               <>
-                <div className="w-1/4 ">
+                <div className="w-1/4 max-md:w-full">
                   <div className="shadow-2xl p-6">
                     <img
                       className="w-full h-72 object-contain object-center"
@@ -46,7 +46,7 @@ export default function Detail() {
                     />
                   </div>
                 </div>
-                <div className="ml-8 flex-1">
+                <div className="md:ml-8 max-md:mt-8 max-md:p-1 flex-1">
                   <h2 className="font-semibold text-2xl">
                     {product?.data?.name}
                   </h2>
@@ -58,12 +58,26 @@ export default function Detail() {
                     )}
                   </p>
                   <p className="font-bold mt-4 text-xl">
-                    {numberWithCommas(product?.data?.price || 0)}
+                    {product?.data?.salesPrice == null ? (
+                      numberWithCommas(product?.data?.price)
+                    ) : (
+                      <span>
+                        <span className="line-through">
+                          {numberWithCommas(product?.data?.price)}
+                        </span>
+                        <span>
+                          {" "}
+                          {numberWithCommas(product?.data?.salesPrice)}
+                        </span>
+                      </span>
+                    )}
+                    VND
                   </p>
                   <Button
+                    className={"w-full"}
                     onClick={() => dispatch(addProductToCart(product.data))}
                   >
-                    ADD TO CART
+                    <span>ADD TO CART</span>
                   </Button>
                   <p className="font-medium mt-4 text-lg">
                     {product?.data?.desc}

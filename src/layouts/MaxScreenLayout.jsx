@@ -1,6 +1,5 @@
 import React from "react";
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 export default function MaxScreenLayout({ children }) {
   return (
@@ -9,7 +8,9 @@ export default function MaxScreenLayout({ children }) {
         <div>
           <Header />
         </div>
-        <div className="my-4 flex-1 overflow-hidden">{children}</div>
+        <div className="max-md:mb-14 my-4 flex-1 overflow-hidden">
+          {children}
+        </div>
       </div>
     </>
   );

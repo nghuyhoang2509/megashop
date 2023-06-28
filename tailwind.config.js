@@ -18,6 +18,7 @@ export default {
       zIndex: {
         modal: 1000,
         loading: 5000,
+        navigateBar: 4000,
       },
     },
   },

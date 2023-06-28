@@ -13,7 +13,7 @@ export default function Input({
       <input
         {...props}
         value={value}
-        onChange={changeValue}
+        onChange={changeValue ? changeValue : () => null}
         placeholder={placeholder}
         className={`${className} outline-none border rounded-md p-3`}
       />

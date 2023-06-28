@@ -9,12 +9,21 @@ import {
   reduceProductAndSave,
   addProductAndSave,
 } from "../../store/cart/cart.action";
+import { toast } from "react-toastify";
 
 export default function Cart() {
   const dispatch = useDispatch();
   const { cart, length, total } = useSelector((state) => state.cart);
+  const { user } = useSelector((state) => state.auth);
   const [openModalPay, setOpenModalPay] = useState(false);
 
+  function onProductPaymentClick() {
+    if (user?.email) {
+      setOpenModalPay(true);
+    } else {
+      toast.error("Cần đăng nhập để có thể đặt hàng");
+    }
+  }
   return (
     <div className="flex mt-4 flex-row h-full relative max-md:flex-col ">
       <Modal open={openModalPay} setOpen={setOpenModalPay}>
@@ -23,7 +32,7 @@ export default function Cart() {
       <div className="flex-1 mr-10 h-full overflow-y-auto">
         {Object.values(cart).map((product) => (
           <div key={product.id} className="my-4">
-            <div className="flex items-center flex-row">
+            <div className="flex items-center flex-row max-md:flex-col max-md:items-start">
               <div className="flex flex-row justify-center ml-6">
                 <Button
                   onClick={() => dispatch(deleteProductAndSave(product))}
@@ -63,7 +72,17 @@ export default function Cart() {
                     {product.name}
                   </p>
                   <p className="mt-2 font-medium">
-                    {numberWithCommas(product.price)} VND
+                    {product.salesPrice == null ? (
+                      numberWithCommas(product.price)
+                    ) : (
+                      <span>
+                        <span className="line-through">
+                          {numberWithCommas(product.price)}
+                        </span>
+                        <span> {numberWithCommas(product.salesPrice)}</span>
+                      </span>
+                    )}
+                    VND
                   </p>
                 </div>
               </div>
@@ -71,12 +90,12 @@ export default function Cart() {
           </div>
         ))}
       </div>
-      <div className="w-1/4 flex flex-col items-end">
+      <div className="w-1/4 max-md:w-full max-md:p-10 flex flex-col items-end">
         <p className="font-normal text-sm text-gray-700">x{length} products</p>
         <p className="mt-4 font-semibold text-lg">
           {numberWithCommas(total)} VND
         </p>
-        <Button onClick={() => setOpenModalPay(true)} className={""}>
+        <Button onClick={() => onProductPaymentClick()} className={""}>
           Product Payment
         </Button>
       </div>

@@ -7,7 +7,7 @@ export default function AuthProvider({ children }) {
   const { user } = useSelector((state) => state.auth);
   let callApi = false;
   useEffect(() => {
-    if (!user && !callApi) {
+    if (!user?.mail && !callApi) {
       dispatch(getUser());
     }
     return () => {

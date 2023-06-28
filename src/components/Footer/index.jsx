@@ -7,9 +7,9 @@ import {
 
 export default function Footer() {
   return (
-    <div className="max-md:invisible font-bold flex flex-col items-center p-8">
-      <div className="flex-row w-full justify-between items-start flex flex-1">
-        <div className="flex-col flex items-center justify-start">
+    <div className="font-bold flex flex-col items-center p-8">
+      <div className="max-md:flex-col max-md:items-center max-md:justify-center flex-row w-full justify-between items-start flex flex-1">
+        <div className="flex-col flex items-center justify-start mb-4">
           <h1 className="mb-2 font-extrabold text-3xl">MEGASHOP</h1>
           <div>
             <FacebookFilled className="text-xl" />
@@ -17,7 +17,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="flex flex-row">
-          <div className="flex-col items-end flex mr-12">
+          <div className="flex-col items-end max-md:items-center flex mr-12">
             <h3>Hỗ trợ khách hàng</h3>
             <p className="text-sm font-medium my-1">Hotline: 1900-6035</p>
             <p className="text-sm font-medium my-1">Các câu hỏi thường gặp</p>
@@ -27,7 +27,7 @@ export default function Footer() {
             <p className="text-sm font-medium my-1">Chính sách đổi trả</p>
             <p className="text-sm font-medium my-1">Hướng dẫn trả góp</p>
           </div>
-          <div className="flex-col items-end flex">
+          <div className="flex-col items-end max-md:items-center flex">
             <h3>Hỗ trợ khách hàng</h3>
             <p className="text-sm font-medium my-1">Hotline: 1900-6035</p>
             <p className="text-sm font-medium my-1">Các câu hỏi thường gặp</p>

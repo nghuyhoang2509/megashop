@@ -39,8 +39,8 @@ export default function Product() {
     dispatch(addProductAndSave(product));
   }
   return (
-    <div className="flex flex-row">
-      <div className="w-1/4 h-full">
+    <div className="flex flex-row max-md:flex-col">
+      <div className="w-1/4 lg:h-full max-md:w-full max-md:mb-4">
         <div className="border">
           <Link to={"/product"}>
             <div className="p-4 text-white bg-black flex items-center">
@@ -62,7 +62,7 @@ export default function Product() {
           </div>
         </div>
       </div>
-      <div className="ml-6 flex-1 flex flex-wrap flex-row">
+      <div className="md:ml-6 flex-1 justify-center flex flex-wrap flex-row">
         {products.loading ? (
           <Loading />
         ) : (
@@ -85,7 +85,7 @@ export default function Product() {
                     </div>
                     <div
                       onClick={() => onAddProduct(product)}
-                      className="hidden transition-all ease-in p-3 font-light absolute bottom-0 text-center left-0 right-0 text-white bg-gray-800"
+                      className="hidden max-md:block transition-all ease-in p-3 font-light absolute bottom-0 text-center left-0 right-0 text-white bg-gray-800"
                     >
                       ADD TO CART
                     </div>
@@ -99,7 +99,17 @@ export default function Product() {
                     {product.name}
                   </p>
                   <p className="text-sm font-bold mt-2 text-center">
-                    {numberWithCommas(product.price)} VND
+                    {product.salesPrice == null ? (
+                      numberWithCommas(product.price)
+                    ) : (
+                      <span>
+                        <span className="line-through">
+                          {numberWithCommas(product.price)}
+                        </span>
+                        <span> {numberWithCommas(product.salesPrice)}</span>
+                      </span>
+                    )}
+                    VND
                   </p>
                 </div>
               </span>

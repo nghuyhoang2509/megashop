@@ -16,7 +16,7 @@ export default function ListCard({ title, data, key }) {
     <>
       {data.length ? (
         <div className="flex flex-col relative">
-          <h2 className="mb-4 font-bold text-gray-700 text-xl uppercase">
+          <h2 className="mb-4 ml-2 font-bold text-gray-700 text-xl uppercase">
             {title}:
           </h2>
           <span
@@ -37,9 +37,9 @@ export default function ListCard({ title, data, key }) {
           >
             {data.map((item) => (
               <Link to={`/product?${title}=${item.id}`} key={item.id}>
-                <div className="hover:scale-105 transition-all ease-linear mx-3 bg-neutral-100 p-4 flex flex-col justify-center items-center">
+                <div className="max-md:p-2 hover:scale-105 transition-all ease-linear mx-3 bg-neutral-100 p-4 flex flex-col justify-center items-center">
                   <img
-                    className="object-contain h-36 w-36 object-center"
+                    className="object-contain max-md:h-16 max-md:w-16 h-36 w-36 object-center"
                     alt=""
                     src={item.image}
                   />

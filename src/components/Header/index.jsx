@@ -1,6 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { UserOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import {
+  UserOutlined,
+  ShoppingCartOutlined,
+  HomeTwoTone,
+  AppstoreTwoTone,
+  MailTwoTone,
+} from "@ant-design/icons";
 import { useLocation } from "react-router-dom";
 import Modal from "../Modal";
 import Login_Register from "../Login_Register";
@@ -17,7 +23,7 @@ export default function Header() {
 
   const [openModal, setOpenModal] = useState(false);
   return (
-    <div className="flex py-6 max-md:hidden flex-row justify-between items-center">
+    <div className="flex max-md:py-2 py-6 flex-row justify-between items-center">
       {user ? (
         <></>
       ) : (
@@ -25,39 +31,48 @@ export default function Header() {
           <Login_Register />
         </Modal>
       )}
-      <div>
+      <div className="max-md:hidden">
         <Link to={"/"}>
           <h1 className="text-3xl font-bold">MEGASHOP</h1>
         </Link>
       </div>
-      <div className="text-lg font-medium">
+      <div className="text-lg max-md:z-navigateBar max-md:bottom-0 max-md:left-0 max-md:right-0 max-md:p-2 max-md:bg-white max-md:fixed max-md:flex max-md:flex-row font-medium items-center justify-center">
         <Link
           to={"/"}
           className={`${
             location.pathname == "/"
-              ? "border-b-2 border-gray-600"
+              ? "md:border-b-2 border-gray-600"
               : "hover:border-b-2 hover:border-gray-300 hover:text-gray-400"
           } transition-all ease-linear  mx-2 `}
         >
-          Home
+          <span className="max-md:hidden">Home</span>
+          <span className="hidden max-md:block mx-4 text-2xl">
+            <HomeTwoTone />
+          </span>
         </Link>
         <Link
           to={"/product"}
           className={`${
             location.pathname == "/product"
-              ? "border-b-2 border-gray-600"
+              ? "md:border-b-2 border-gray-600"
               : "hover:border-b-2 hover:border-gray-300 hover:text-gray-400"
-          } transition-all ease-linear  mx-2 `}
+          } transition-all ease-linear mx-2 `}
         >
-          Product
+          <span className="max-md:hidden">Product</span>
+          <span className="hidden max-md:block mx-4 text-2xl">
+            <AppstoreTwoTone />
+          </span>
         </Link>
         <Link className="transition-all ease-linear mx-2 hover:border-b-2 hover:border-gray-300 hover:text-gray-400">
-          Contact
+          <span className="max-md:hidden">Contact</span>
+          <span className="hidden max-md:block mx-4 text-2xl">
+            <MailTwoTone />
+          </span>
         </Link>
       </div>
-      <div className="flex items-center text-sm text-gray-500 cursor-pointer">
+      <div className="flex items-center justify-end max-md:w-full text-sm text-gray-500 cursor-pointer">
         <h3>
-          <span className="">
+          <span className=" max-md:text-xs">
             <UserOutlined className="text-xl mr-3" />
             {user ? (
               <>
