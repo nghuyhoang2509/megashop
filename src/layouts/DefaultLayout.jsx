@@ -10,7 +10,7 @@ export default function DefaultLayout({ children }) {
           <Header />
         </div>
         <div className="my-4">{children}</div>
-        <div className="mt-auto -mx-20">
+        <div className="mt-auto">
           <Footer />
         </div>
       </div>

@@ -1,22 +1,43 @@
-import { useContext, useState, useEffect } from "react";
-import { ProductContext } from "../../context/ProductProvider";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { UnorderedListOutlined, RightOutlined } from "@ant-design/icons";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { numberWithCommas } from "../../utils";
+import Loading from "../../components/Loading";
 
 import style from "./product.module.css";
+import {
+  getAllCategory,
+  getAllProduct,
+  getProductByCategory,
+} from "../../store/product/product.action";
+import { addProductAndSave } from "../../store/cart/cart.action";
 
 export default function Product() {
+  const dispatch = useDispatch();
+  const { products, categories } = useSelector((state) => state.product);
   const location = useLocation();
+  const navigate = useNavigate();
   const params = new URLSearchParams(location.search);
-  const data = useContext(ProductContext);
-  const [products, setProducts] = useState([...data.product]);
   useEffect(() => {
+    dispatch(getAllCategory());
+  }, []);
+
+  useEffect(() => {
+    const categoryId = params.get("category");
+    if (!categoryId) {
+      dispatch(getAllProduct());
+    } else {
+      dispatch(getProductByCategory(categoryId));
+    }
     const unsub = () => window.scrollTo(0, 0);
     return () => {
       unsub();
     };
-  });
+  }, [location]);
+  function onAddProduct(product) {
+    dispatch(addProductAndSave(product));
+  }
   return (
     <div className="flex flex-row">
       <div className="w-1/4 h-full">
@@ -28,7 +49,7 @@ export default function Product() {
             </div>
           </Link>
           <div>
-            {data.category.map((item) => (
+            {categories.data.map((item) => (
               <Link key={item.id} to={`?category=${item.id}`}>
                 <div className="p-4 border-b bg-white flex items-center">
                   {item.id == params.get("category") ? (
@@ -42,33 +63,49 @@ export default function Product() {
         </div>
       </div>
       <div className="ml-6 flex-1 flex flex-wrap flex-row">
-        {products.map((product) => (
-          <Link to={`/product/${product.id}`} key={product.id}>
-            {product.category_id == params.get("category") ||
-            params.get("category") == null ? (
-              <div className="mb-6 mx-4 flex flex-col w-64">
-                <div
-                  className={`${style.cardProduct} relative cursor-pointer w-full h-72 p-8 bg-neutral-100`}
-                >
-                  <img
-                    alt=""
-                    className="w-full object-contain object-center"
-                    src="/category/white-headphones-c437821bd3393cd6aa8f3b75237553ec.png"
-                  />
-                  <div className="hidden transition-all ease-in p-3 font-light absolute bottom-0 text-center left-0 right-0 text-white bg-gray-800">
-                    ADD TO CART
+        {products.loading ? (
+          <Loading />
+        ) : (
+          <>
+            {products.data.map((product) => (
+              <span key={product.id}>
+                <div className="mb-6 mx-4 flex flex-col w-64">
+                  <div
+                    className={`${style.cardProduct} relative cursor-pointer w-full bg-neutral-100`}
+                  >
+                    <div
+                      onClick={() => navigate(`/product/${product.id}`)}
+                      className="p-8"
+                    >
+                      <img
+                        alt=""
+                        className="w-full h-52 object-contain object-center"
+                        src={product.image}
+                      />
+                    </div>
+                    <div
+                      onClick={() => onAddProduct(product)}
+                      className="hidden transition-all ease-in p-3 font-light absolute bottom-0 text-center left-0 right-0 text-white bg-gray-800"
+                    >
+                      ADD TO CART
+                    </div>
+                    {product.quantity == 0 && (
+                      <span className="absolute top-2 rounded-s-lg right-0 text-white font-bold bg-red-600 py-2 px-4 shadow-md">
+                        Sold out
+                      </span>
+                    )}
                   </div>
+                  <p className="text-sm font-semibold mt-4 text-center">
+                    {product.name}
+                  </p>
+                  <p className="text-sm font-bold mt-2 text-center">
+                    {numberWithCommas(product.price)} VND
+                  </p>
                 </div>
-                <p className="text-sm font-semibold mt-4 text-center">
-                  {product.name}
-                </p>
-                <p className="text-sm font-bold mt-2 text-center">
-                  {numberWithCommas(product.price)} VND
-                </p>
-              </div>
-            ) : null}
-          </Link>
-        ))}
+              </span>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );

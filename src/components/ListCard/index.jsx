@@ -37,11 +37,11 @@ export default function ListCard({ title, data, key }) {
           >
             {data.map((item) => (
               <Link to={`/product?${title}=${item.id}`} key={item.id}>
-                <div className="hover:scale-105 transition-all ease-linear min-h-32 min-w-36 mx-3 bg-neutral-100 p-4 flex flex-col justify-center items-center">
+                <div className="hover:scale-105 transition-all ease-linear mx-3 bg-neutral-100 p-4 flex flex-col justify-center items-center">
                   <img
-                    className="w-full h-full object-cover object-center"
+                    className="object-contain h-36 w-36 object-center"
                     alt=""
-                    src="/category/162050-laptop-notebook-free-hd-image.png"
+                    src={item.image}
                   />
                   <p className="mt-3 font-semibold">{item.name}</p>
                 </div>

@@ -1,10 +1,20 @@
 import React from "react";
 
-export default function Button({ children, onClick, className }) {
+export default function Button({
+  children,
+  onClick,
+  className,
+  small,
+  outline,
+}) {
   return (
     <button
       onClick={onClick}
-      className={`${className} mt-8 py-4 px-8 font-semibold text-white bg-black text-center rounded-md`}
+      className={`${!small && "py-4 px-8 mt-8"} ${
+        outline
+          ? "bg-white text-black border-black border"
+          : "bg-black text-white "
+      } font-semibold text-center rounded-md ${className}`}
     >
       {children}
     </button>

@@ -1,37 +1,80 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { ProductContext } from "../../context/ProductProvider";
 import { numberWithCommas } from "../../utils";
 import Button from "../../components/Button";
+import { getProduct } from "../../store/product/product.action";
+import { addProductToCart } from "../../store/cart/cart.action";
+import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 export default function Detail() {
-  const { product } = useContext(ProductContext);
+  const dispatch = useDispatch();
+  const { product } = useSelector((state) => state.product);
   const params = useParams();
-  const [item, setItem] = useState(null);
   useEffect(() => {
-    setItem(product.find((a) => a.id == params.id));
+    dispatch(getProduct(params.id));
   }, [params.id]);
 
   return (
-    <div className="flex flex-row mt-8">
-      <div className="w-1/4 ">
-        <div className="shadow-2xl p-6">
-          <img
-            className="w-full h-72 object-contain object-center"
-            alt=""
-            src="/category/white-headphones-c437821bd3393cd6aa8f3b75237553ec.png"
-          />
-        </div>
+    <div className="flex flex-col">
+      <div className="text-blue-600 font-semibold text-md cursor-pointer">
+        <Link to={"/product"} className="mr-3 underline">
+          All
+        </Link>
+        /
+        <Link
+          to={`/product?category=${product?.data?.categoryId}`}
+          className="ml-3 underline"
+        >
+          {product?.data?.categories?.name}
+        </Link>
       </div>
-      <div className="ml-8 flex-1">
-        <h2 className="font-semibold text-2xl">{item?.name}</h2>
-        <p className="mt-2 font-light italic text-md">Còn {item?.qty}</p>
-        <p className="font-bold mt-4 text-xl">
-          {numberWithCommas(item?.price || 0)}
-        </p>
-        <p className="font-medium mt-4 text-lg">{item?.desc}</p>
-        <p className="font-medium mt-4 text-lg">{item?.content}</p>
-        <Button>ADD TO CART</Button>
+      <div className="flex flex-row mt-8">
+        {product?.loading ? (
+          <Loading />
+        ) : (
+          <>
+            {product?.data?.id ? (
+              <>
+                <div className="w-1/4 ">
+                  <div className="shadow-2xl p-6">
+                    <img
+                      className="w-full h-72 object-contain object-center"
+                      alt=""
+                      src={product?.data?.image}
+                    />
+                  </div>
+                </div>
+                <div className="ml-8 flex-1">
+                  <h2 className="font-semibold text-2xl">
+                    {product?.data?.name}
+                  </h2>
+                  <p className="mt-2 font-light italic text-md">
+                    {product?.data?.quantity == 0 ? (
+                      <span className="font-bold text-red-700">Sold out</span>
+                    ) : (
+                      <>Còn {product?.data?.quantity}</>
+                    )}
+                  </p>
+                  <p className="font-bold mt-4 text-xl">
+                    {numberWithCommas(product?.data?.price || 0)}
+                  </p>
+                  <Button
+                    onClick={() => dispatch(addProductToCart(product.data))}
+                  >
+                    ADD TO CART
+                  </Button>
+                  <p className="font-medium mt-4 text-lg">
+                    {product?.data?.desc}
+                  </p>
+                </div>
+              </>
+            ) : (
+              "Có lỗi xảy ra"
+            )}
+          </>
+        )}
       </div>
     </div>
   );
