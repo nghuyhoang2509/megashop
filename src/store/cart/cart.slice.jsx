@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import {
   addProductAndSave,
   addProductToCart,
+  createOrder,
   deleteProductToCart,
   getCart,
   reduceProductToCart,
@@ -12,6 +13,7 @@ const initialState = {
   cart: {},
   length: 0,
   total: 0,
+  loading: false,
 };
 
 const cartSlice = createSlice({
@@ -19,6 +21,19 @@ const cartSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(createOrder.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(createOrder.fulfilled, (state, action) => {
+      state.loading = false;
+      state.cart = {};
+      state.length = 0;
+      state.total = 0;
+    });
+    builder.addCase(createOrder.rejected, (state, action) => {
+      state.loading = false;
+    });
+
     builder.addCase(getCart, (state, action) => {
       const data = getCartFromLocalStorage();
       const cart = data?.cart || {};

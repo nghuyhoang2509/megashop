@@ -10,7 +10,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`${!small && "py-4 px-8 mt-8"} ${
+      className={`${!small && "py-4 px-8"} ${
         outline
           ? "bg-white text-black border-black border"
           : "bg-black text-white "

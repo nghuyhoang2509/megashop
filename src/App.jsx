@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Product from "./pages/Product";
 import Detail from "./pages/Detail";
 import Cart from "./pages/Cart";
+import Admin from "./pages/Admin";
 import MaxScreenLayout from "./layouts/MaxScreenLayout";
 import AuthProvider from "./context/AuthProvider";
 import { useDispatch, useSelector } from "react-redux";
@@ -60,6 +61,7 @@ function App() {
                   </MaxScreenLayout>
                 }
               />
+              <Route path="/admin/*" element={<Admin />}></Route>
             </Routes>
           </BrowserRouter>
         </div>

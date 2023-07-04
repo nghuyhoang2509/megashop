@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { register, login } from "../../store/auth/auth.action";
 import Loading from "../Loading";
 
-export default function Login_Register() {
+export default function Login_Register({ hideRegister, classButton }) {
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
@@ -135,14 +135,14 @@ export default function Login_Register() {
           onClick={() => setStatusLogin(!statusLogin)}
           className="text-center my-3 cursor-pointer text-blue-600 underline text-sm"
         >
-          {statusLogin ? "Don't have account" : "Go to login"}
+          {statusLogin ? !hideRegister && "Don't have account" : "Go to login"}
         </h3>
         {statusLogin ? (
-          <Button onClick={onLogin} className={"w-full"}>
+          <Button onClick={onLogin} className={`w-full ${classButton} mt-8`}>
             Login
           </Button>
         ) : (
-          <Button onClick={onRegister} className={"w-full"}>
+          <Button onClick={onRegister} className={`w-full ${classButton} mt-8`}>
             Register
           </Button>
         )}

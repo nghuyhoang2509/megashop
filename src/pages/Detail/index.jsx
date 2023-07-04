@@ -74,7 +74,7 @@ export default function Detail() {
                     VND
                   </p>
                   <Button
-                    className={"w-full"}
+                    className={"max-md:w-full mt-8"}
                     onClick={() => dispatch(addProductToCart(product.data))}
                   >
                     <span>ADD TO CART</span>
