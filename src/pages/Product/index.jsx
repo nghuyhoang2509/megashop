@@ -136,13 +136,18 @@ export default function Product() {
       </div>
       <div className="flex-1 justify-center items-center flex flex-col">
         <div className="w-full px-8">
+          {params.get("search") ? (
+            <p className="font-medium text-lg">
+              Kết quả tìm kiếm cho: {params.get("search")}
+            </p>
+          ) : null}
           <input
             value={searchInput}
             onChange={onSearchInputChange}
             onKeyDown={onKeyUpSearch}
             type="text"
             placeholder="Nhập những gì bạn muốn tìm kiếm và ấn enter"
-            className="w-full outline-none p-3 border rounded-md"
+            className="mt-3 w-full outline-none p-3 border rounded-md"
           />
         </div>
         <div className="mt-8 flex-1 justify-center flex flex-wrap md:ml-6">
