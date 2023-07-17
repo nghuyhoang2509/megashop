@@ -15,7 +15,7 @@ export default function ListCard({ title, data, key }) {
   return (
     <>
       {data.length ? (
-        <div className="flex flex-col relative">
+        <div className="flex flex-col relative mt-4">
           <h2 className="mb-4 ml-2 font-bold text-gray-700 text-xl uppercase">
             {title}:
           </h2>
@@ -41,7 +41,7 @@ export default function ListCard({ title, data, key }) {
                   <img
                     className="object-contain max-md:h-16 max-md:w-16 h-36 w-36 object-center"
                     alt=""
-                    src={item.image}
+                    src={item?.image?.url}
                   />
                   <p className="mt-3 font-semibold">{item.name}</p>
                 </div>

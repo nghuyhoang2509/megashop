@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllCategory } from "../../../store/product/product.action";
+import { getAllBrand } from "../../../store/product/product.action";
 import { FileAddOutlined } from "@ant-design/icons";
 import Button from "../../../components/Button";
 import DataTable from "react-data-table-component";
@@ -9,12 +9,12 @@ import Loading from "../../../components/Loading";
 import Input from "../../../components/Input";
 import ImageSelect from "../../../components/ImageSelect";
 import {
-  createCategory,
-  deleteCategory,
-  editCategory,
+  createBrand,
+  deleteBrand,
+  editBrand,
 } from "../../../store/admin/admin.action";
 
-export default function Category() {
+export default function Brand() {
   const columns = [
     { name: "Name", selector: (row) => row.name, sortable: true },
     {
@@ -34,35 +34,35 @@ export default function Category() {
   const [showModal, setShowModal] = useState(false);
   const [editingMode, setEditingMode] = useState(false);
   const [selectedRow, setSelectedRow] = useState([]);
-  const [categorySelect, setCategorySelect] = useState({
+  const [brandSelect, setBrandSelect] = useState({
     name: "",
     imageId: null,
   });
-  const { data, loading } = useSelector((state) => state.product.categories);
+  const { data, loading } = useSelector((state) => state.product.brands);
   const { loading: loadingAdmin } = useSelector((state) => state.admin);
   let callApi = true;
   useEffect(() => {
     if (callApi && !loadingAdmin) {
-      dispatch(getAllCategory());
+      dispatch(getAllBrand());
     }
     return () => {
       callApi = false;
     };
   }, [loadingAdmin]);
-  const onDeleteCategoryClick = () => {
-    const categoryIdArray = selectedRow.map((row) => row.id);
-    dispatch(deleteCategory({ categoryId: categoryIdArray }));
+  const onDeleteBrandClick = () => {
+    const brandIdArray = selectedRow.map((row) => row.id);
+    dispatch(deleteBrand({ brandId: brandIdArray }));
   };
   const onRowClicked = (row) => {
     setEditingMode(true);
     setShowModal(true);
-    setCategorySelect(row);
+    setBrandSelect(row);
   };
   const onSaveButtonClick = () => {
     if (editingMode) {
-      dispatch(editCategory(categorySelect));
+      dispatch(editBrand(brandSelect));
     } else {
-      dispatch(createCategory(categorySelect));
+      dispatch(createBrand(brandSelect));
     }
     setShowModal(false);
   };
@@ -79,26 +79,26 @@ export default function Category() {
                 <Input
                   className={"w-full mt-3"}
                   changeValue={(e) =>
-                    setCategorySelect({
-                      ...categorySelect,
+                    setBrandSelect({
+                      ...brandSelect,
                       name: e.target.value,
                     })
                   }
-                  value={categorySelect?.name}
-                  placeholder={"Nhập name của category"}
+                  value={brandSelect?.name}
+                  placeholder={"Nhập name của brand"}
                 />
                 <h4 className=" mt-4 mb-4">Image:</h4>
                 <div className="w-64 h-64 flex justify-center items-center border">
-                  {categorySelect?.image?.url ? (
-                    <img src={categorySelect?.image?.url} alt="error" />
+                  {brandSelect?.image?.url ? (
+                    <img src={brandSelect?.image?.url} alt="error" />
                   ) : (
                     <p>Chưa có hình ảnh</p>
                   )}
                 </div>
                 <ImageSelect
                   setImage={(imageId, image) =>
-                    setCategorySelect({
-                      ...categorySelect,
+                    setBrandSelect({
+                      ...brandSelect,
                       imageId: imageId,
                       image,
                     })
@@ -119,7 +119,7 @@ export default function Category() {
                   này không ?
                 </h3>
                 <Button
-                  onClick={onDeleteCategoryClick}
+                  onClick={onDeleteBrandClick}
                   className={"ml-3 bg-green-700"}
                 >
                   Xóa
@@ -129,7 +129,7 @@ export default function Category() {
             <Button
               onClick={() => {
                 setShowModal(true);
-                setCategorySelect({
+                setBrandSelect({
                   name: "",
                   imageId: null,
                 });
@@ -138,7 +138,7 @@ export default function Category() {
               className="w-fit flex mb-4 items-center mr-4 ml-auto"
             >
               <FileAddOutlined className="mr-2" />
-              Thêm category
+              Thêm brand
             </Button>
           </div>
           <div className="flex-1 overflow-y-hidden w-full p-2">

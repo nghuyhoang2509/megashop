@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
+  getAllBrand,
   getAllCategory,
   getAllProduct,
 } from "../../../store/product/product.action";
@@ -34,7 +35,7 @@ export default function Product() {
     },
     {
       name: "Category",
-      selector: (row) => row.categories.name,
+      selector: (row) => row?.categories?.name || "Không có",
       sortable: true,
     },
   ];
@@ -49,6 +50,7 @@ export default function Product() {
     if (callApi && !loadingAdmin) {
       dispatch(getAllProduct());
       dispatch(getAllCategory());
+      dispatch(getAllBrand());
     }
     return () => {
       callApi = false;
@@ -63,7 +65,7 @@ export default function Product() {
     setProductSelect(row);
   };
   return (
-    <div className="h-full flex flex-col items-end">
+    <div className="h-full flex flex-col items-end p-2">
       {loadingAdmin ? (
         <Loading />
       ) : (

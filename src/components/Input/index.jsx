@@ -6,10 +6,11 @@ export default function Input({
   value,
   changeValue,
   children,
+  wFull,
   ...props
 }) {
   return (
-    <span className="relative">
+    <span className={`${wFull && "w-full justify-center flex"}`}>
       <input
         {...props}
         value={value}

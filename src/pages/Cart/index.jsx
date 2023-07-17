@@ -70,7 +70,7 @@ export default function Cart() {
                       width={40}
                       height={40}
                       alt="error"
-                      src={product.image}
+                      src={product?.image?.url}
                     />
                     <div className="flex flex-1 flex-col ">
                       <p className="py-2 font-semibold text-ellipsis whitespace-nowrap overflow-hidden">

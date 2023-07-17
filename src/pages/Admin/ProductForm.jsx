@@ -1,17 +1,22 @@
 import { useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
-import ImageUpload from "../../components/ImageUpload";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { createProduct, updateProduct } from "../../store/admin/admin.action";
+import ImageSelect from "../../components/ImageSelect";
 
 export default function ProductForm({ setOpen, productSelect }) {
   const dispatch = useDispatch();
   const [product, setProduct] = useState(
     productSelect || { name: "", desc: "", salesPrice: null }
   );
+  console.log(product);
   const { data: categories } = useSelector((state) => state.product.categories);
+  const { data: brands } = useSelector((state) => state.product.brands);
+  function setImageProduct(imageId, image) {
+    setProduct({ ...product, imageId, image });
+  }
   const onCreateClick = () => {
     if (!product?.name?.trim().length) {
       return toast.error("không được bỏ trống name");
@@ -31,10 +36,21 @@ export default function ProductForm({ setOpen, productSelect }) {
     if (!product?.image) {
       return toast.error("Image không hợp lệ");
     }
-    if (!product?.categoryId && product?.categoryId != 0) {
+    if (
+      !product?.categoryId &&
+      product?.categoryId != 0 &&
+      product?.categoryId !== null
+    ) {
       return toast.error("Category không hợp lệ");
     }
-    if (productSelect.name) {
+    if (
+      !product?.brandId &&
+      product?.brandId != 0 &&
+      product?.brandId !== null
+    ) {
+      return toast.error("Category không hợp lệ");
+    }
+    if (productSelect?.name) {
       dispatch(updateProduct(product));
     } else {
       dispatch(createProduct(product));
@@ -126,15 +142,22 @@ export default function ProductForm({ setOpen, productSelect }) {
             </div>
           </div>
         </div>
-        <div className="my-4 flex flex-col items-start">
-          <h3 className="text-gray-600">Image:</h3>
-          <ImageUpload
-            imageUrl={product?.image}
-            setImageUrl={(image) => setProduct({ ...product, image: image })}
-          />
-        </div>
+
         <div className="my-4 flex flex-col items-start">
           <h3 className="text-gray-600 mb-4">Category:</h3>
+          <div className="my-2 ml-2">
+            <input
+              type="radio"
+              id={"category-null"}
+              value={null}
+              defaultChecked={product?.categoryId === null}
+              onChange={(e) => setProduct({ ...product, categoryId: null })}
+              name="category"
+            />
+            <label htmlFor={"category-null"} className="ml-2">
+              None
+            </label>
+          </div>
           {categories.map((category) => (
             <div className="my-2 ml-2" key={category.id}>
               <input
@@ -153,6 +176,50 @@ export default function ProductForm({ setOpen, productSelect }) {
             </div>
           ))}
         </div>
+        <div className="my-4 flex flex-col items-start">
+          <h3 className="text-gray-600 mb-4">Brand:</h3>
+          <div className="my-2 ml-2">
+            <input
+              type="radio"
+              id={"brand-null"}
+              value={null}
+              defaultChecked={product?.brandId === null}
+              onChange={(e) => setProduct({ ...product, brandId: null })}
+              name="brand"
+            />
+            <label htmlFor={"brand-null"} className="ml-2">
+              None
+            </label>
+          </div>
+          {brands.map((brand) => (
+            <div className="my-2 ml-2" key={brand.id}>
+              <input
+                type="radio"
+                id={brand.name}
+                value={brand.id}
+                defaultChecked={brand.id == product?.brandId}
+                onChange={(e) =>
+                  setProduct({ ...product, brandId: e.target.value })
+                }
+                name="brand"
+              />
+              <label htmlFor={brand.name} className="ml-2">
+                {brand.name}
+              </label>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="my-4 flex flex-col items-start">
+        <h3 className="text-gray-600 mb-4">Image:</h3>
+        <div className="w-64 h-64 flex justify-center items-center border">
+          {product?.image?.url ? (
+            <img src={product?.image?.url} alt="error" />
+          ) : (
+            <p>Chưa có hình ảnh</p>
+          )}
+        </div>
+        <ImageSelect setImage={setImageProduct} />
       </div>
       <div className="flex justify-end">
         <Button onClick={onCreateClick}>SAVE</Button>

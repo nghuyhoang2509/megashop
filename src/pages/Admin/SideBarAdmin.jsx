@@ -27,13 +27,21 @@ export default function SideBarAdmin() {
               {location.pathname == "/admin" && <CaretRightOutlined />}
               Tổng quan
             </Link>
-            {/* <Link to={"category"} className="my-3 flex items-center">
+            <Link to={"category"} className="my-3 flex items-center">
               {location.pathname == "/admin/category" && <CaretRightOutlined />}
               Phân loại
-            </Link> */}
+            </Link>
+            <Link to={"brand"} className="my-3 flex items-center">
+              {location.pathname == "/admin/brand" && <CaretRightOutlined />}
+              Thương hiệu
+            </Link>
             <Link to={"product"} className="my-3 flex items-center">
               {location.pathname == "/admin/product" && <CaretRightOutlined />}
               Sản phẩm
+            </Link>
+            <Link to={"album"} className="my-3 flex items-center">
+              {location.pathname == "/admin/album" && <CaretRightOutlined />}
+              Thư viện ảnh
             </Link>
             <Link to={"order"} className="my-3 flex items-center">
               {location.pathname == "/admin/order" && <CaretRightOutlined />}

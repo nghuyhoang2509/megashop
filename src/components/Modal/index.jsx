@@ -18,7 +18,7 @@ export default function Modal({ children, open, setOpen, fullScreen }) {
                 onClick={() => setOpen(false)}
               />
             </div>
-            <div className="py-4 px-8 ">{children}</div>
+            <div className="py-4 px-8">{children}</div>
           </div>
         </div>
       ) : null}

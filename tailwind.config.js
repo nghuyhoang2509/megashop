@@ -8,6 +8,11 @@ export default {
       },
       maxWidth: {
         96: "24rem",
+        screen: "80vw",
+      },
+      maxHeight: {
+        screen: "80vh",
+        100: "25rem",
       },
       minWidth: {
         36: "9rem",

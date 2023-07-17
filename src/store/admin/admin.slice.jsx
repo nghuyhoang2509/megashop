@@ -3,17 +3,28 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   order: [],
   user: [],
+  album: [],
   loading: false,
   loadingChangeRole: false,
+  loadingAlbum: false,
 };
 
 import {
   changeRole,
+  createCategory,
   createProduct,
+  deleteCategory,
+  deleteImage,
   deleteProduct,
+  editCategory,
+  getAllImage,
   getAllOrder,
   getAllUser,
   updateProduct,
+  uploadImage,
+  deleteBrand,
+  createBrand,
+  editBrand,
 } from "./admin.action";
 
 const AdminSlice = createSlice({
@@ -59,6 +70,60 @@ const AdminSlice = createSlice({
     builder.addCase(deleteProduct.fulfilled, (state, action) => {
       state.loading = false;
     });
+    builder.addCase(deleteCategory.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteCategory.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteCategory.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(editCategory.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(editCategory.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(editCategory.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(createCategory.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(createCategory.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(createCategory.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteBrand.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(deleteBrand.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(deleteBrand.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(editBrand.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(editBrand.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(editBrand.fulfilled, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(createBrand.pending, (state, action) => {
+      state.loading = true;
+    });
+    builder.addCase(createBrand.rejected, (state, action) => {
+      state.loading = false;
+    });
+    builder.addCase(createBrand.fulfilled, (state, action) => {
+      state.loading = false;
+    });
     builder.addCase(updateProduct.pending, (state, action) => {
       state.loading = true;
     });
@@ -76,6 +141,40 @@ const AdminSlice = createSlice({
     });
     builder.addCase(changeRole.fulfilled, (state, action) => {
       state.loadingChangeRole = false;
+    });
+    builder.addCase(uploadImage.pending, (state, action) => {
+      state.loadingAlbum = true;
+    });
+    builder.addCase(uploadImage.rejected, (state, action) => {
+      state.loadingAlbum = false;
+    });
+    builder.addCase(uploadImage.fulfilled, (state, action) => {
+      state.loadingAlbum = false;
+      state.album.push(action?.payload?.data?.data);
+    });
+    builder.addCase(getAllImage.pending, (state, action) => {
+      state.loadingAlbum = true;
+    });
+    builder.addCase(getAllImage.rejected, (state, action) => {
+      state.loadingAlbum = false;
+    });
+    builder.addCase(getAllImage.fulfilled, (state, action) => {
+      state.loadingAlbum = false;
+      state.album = action?.payload?.data?.data || [];
+    });
+    builder.addCase(deleteImage.pending, (state, action) => {
+      state.loadingAlbum = true;
+    });
+    builder.addCase(deleteImage.rejected, (state, action) => {
+      state.loadingAlbum = false;
+    });
+    builder.addCase(deleteImage.fulfilled, (state, action) => {
+      state.loadingAlbum = false;
+      const positionDelete = action.meta.arg.index;
+      state.album = [
+        ...state.album.slice(0, positionDelete),
+        ...state.album.slice(positionDelete + 1, state.album.length),
+      ];
     });
   },
 });

@@ -9,26 +9,26 @@ export default function Order() {
   const columns = [
     {
       name: "Created At",
-      selector: (row) => formatDate(row.createdAt),
+      selector: (row) => formatDate(row?.createdAt),
       sortable: true,
     },
     {
       name: "Full Name",
-      selector: (row) => row.users.fullName,
+      selector: (row) => row?.users?.fullName,
       sortable: true,
     },
     {
       name: "Total",
-      selector: (row) => `${numberWithCommas(row.total)} VND`,
+      selector: (row) => `${numberWithCommas(row?.total)} VND`,
       sortable: true,
     },
     {
       name: "Address",
-      selector: (row) => row.address,
+      selector: (row) => row?.address,
     },
     {
       name: "Phone",
-      selector: (row) => row.phone,
+      selector: (row) => row?.phone,
     },
   ];
   const dispatch = useDispatch();
@@ -54,7 +54,7 @@ export default function Order() {
             width={40}
             height={40}
             alt="error"
-            src={product.orderproducts.image}
+            src={product.orderproducts?.image?.url}
           />
           <div className="flex flex-1 flex-col ">
             <p className="py-2 text-sm font-semibold text-ellipsis whitespace-nowrap overflow-hidden">
@@ -82,7 +82,7 @@ export default function Order() {
     </div>
   );
   return (
-    <div className="h-full flex flex-col items-end">
+    <div className="h-full flex flex-col items-end p-2">
       <div className="flex-1 w-full overflow-y-hidden p-2">
         <DataTable
           expandableRows

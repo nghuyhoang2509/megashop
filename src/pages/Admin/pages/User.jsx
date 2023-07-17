@@ -52,7 +52,7 @@ export default function User() {
     },
   ];
   return (
-    <div className="h-full flex flex-col items-end">
+    <div className="h-full flex flex-col items-end p-2">
       <ul className="mb-4 bg-green-300 py-2 px-4 rounded-lg border border-red-700 text-red-700 font-medium list-disc">
         <li className="my-2 ml-3">Admin có tất cả quyền</li>
         <li className="my-2 ml-3">Manager không thể phân quyền user</li>

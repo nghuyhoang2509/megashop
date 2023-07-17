@@ -2,13 +2,28 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Slide from "../../components/Slide";
 import ListCard from "../../components/ListCard";
-import { getAllCategory } from "../../store/product/product.action";
+import {
+  getAllBrand,
+  getAllCategory,
+} from "../../store/product/product.action";
 
 export default function Home() {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.product.categories);
+  const { data: categories, loadingCate } = useSelector(
+    (state) => state.product.categories
+  );
+  const { data: brands, loadingBra } = useSelector(
+    (state) => state.product.brands
+  );
+  let callApi = true;
   useEffect(() => {
-    dispatch(getAllCategory());
+    if (callApi) {
+      dispatch(getAllCategory());
+      dispatch(getAllBrand());
+    }
+    return () => {
+      callApi = false;
+    };
   }, []);
 
   return (
@@ -17,7 +32,12 @@ export default function Home() {
         <Slide />
       </div>
       <div className="my-12">
-        <ListCard title={"category"} data={data || []} loading={loading} />
+        <ListCard
+          title={"category"}
+          data={categories || []}
+          loading={loadingCate}
+        />
+        <ListCard title={"brand"} data={brands || []} loading={loadingBra} />
       </div>
     </div>
   );

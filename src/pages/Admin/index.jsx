@@ -12,6 +12,8 @@ import Category from "./pages/Category";
 import Product from "./pages/Product";
 import User from "./pages/User";
 import Order from "./pages/Order";
+import Album from "./pages/Album";
+import Brand from "./pages/Brand";
 
 export default function Admin() {
   const dispatch = useDispatch();
@@ -20,12 +22,14 @@ export default function Admin() {
     <>
       {user?.role == role.admin || user?.role == role.manager ? (
         <SideBarLayOut>
-          <div className="h-full p-2">
+          <div className="h-full">
             <Routes>
               <Route path="/" element={<DashBoard />} />
-              {/*  <Route path="/category" element={<Category />} /> */}
+              <Route path="/category" element={<Category />} />
+              <Route path="/brand" element={<Brand />} />
               <Route path="/product" element={<Product />} />
               <Route path="/order" element={<Order />} />
+              <Route path="/album" element={<Album />} />
               <Route path="/user" element={<User />} />
             </Routes>
           </div>

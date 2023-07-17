@@ -10,10 +10,8 @@ import {
 import { useLocation } from "react-router-dom";
 import Modal from "../Modal";
 import Login_Register from "../Login_Register";
-import { getCartFromLocalStorage } from "../../utils";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/auth/auth.action";
-import { useEffect } from "react";
 
 export default function Header() {
   const location = useLocation();

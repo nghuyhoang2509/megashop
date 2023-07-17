@@ -14,12 +14,24 @@ export const getAllCategory = createAsyncThunk(
     }
   }
 );
+export const getAllBrand = createAsyncThunk(
+  "product/get_all_brand",
+  async (payload, thunkApi) => {
+    try {
+      const data = await productApi.getAllBrand();
+      return data;
+    } catch (error) {
+      const message = error?.response?.data?.message || error.message;
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
 
 export const getAllProduct = createAsyncThunk(
   "product/get_all_product",
   async (payload, thunkApi) => {
     try {
-      const data = await productApi.getAllProduct();
+      const data = await productApi.getAllProduct(payload);
       return data;
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
@@ -33,6 +45,18 @@ export const getProductByCategory = createAsyncThunk(
   async (payload, thunkApi) => {
     try {
       const data = await productApi.getProductByCategory(payload);
+      return data;
+    } catch (error) {
+      const message = error?.response?.data?.message || error.message;
+      return thunkApi.rejectWithValue(message);
+    }
+  }
+);
+export const getProductByBrand = createAsyncThunk(
+  "product/get_product_by_brand",
+  async (payload, thunkApi) => {
+    try {
+      const data = await productApi.getProductByBrand(payload);
       return data;
     } catch (error) {
       const message = error?.response?.data?.message || error.message;
