@@ -15,7 +15,6 @@ export default function Detail() {
   useEffect(() => {
     dispatch(getProduct(params.id));
   }, [params.id]);
-
   return (
     <div className="flex flex-col">
       <div className="text-blue-600 max-md:ml-2 font-semibold text-md cursor-pointer">
@@ -42,7 +41,7 @@ export default function Detail() {
                     <img
                       className="w-full h-72 object-contain object-center"
                       alt=""
-                      src={product?.data?.image}
+                      src={product?.data?.image?.url}
                     />
                   </div>
                 </div>

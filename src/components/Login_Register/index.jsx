@@ -116,21 +116,23 @@ export default function Login_Register({ hideRegister, classButton }) {
           placeholder="Email"
           changeValue={onChangeEmail}
         />
-        <Input
-          className={"w-full"}
-          type={showPassword ? "text" : "password"}
-          value={infoUser.password}
-          autoComplete="password"
-          placeholder="Password"
-          changeValue={onChangePassword}
-        >
-          <span
-            onClick={() => setShowPassword(!showPassword)}
-            className="absolute top-1/2 text-gray-600 -translate-y-1/2 cursor-pointer right-2"
+        <span className="relative">
+          <Input
+            className={"w-full"}
+            type={showPassword ? "text" : "password"}
+            value={infoUser.password}
+            autoComplete="password"
+            placeholder="Password"
+            changeValue={onChangePassword}
           >
-            {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
-          </span>
-        </Input>
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 text-gray-600 -translate-y-1/2 cursor-pointer right-2"
+            >
+              {showPassword ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+            </span>
+          </Input>
+        </span>
         <h3
           onClick={() => setStatusLogin(!statusLogin)}
           className="text-center my-3 cursor-pointer text-blue-600 underline text-sm"
