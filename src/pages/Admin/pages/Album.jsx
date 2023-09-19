@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Button from "../../../components/Button";
-import UploadImage from "../../../components/uploadImage";
+import UploadImage from "../../../components/uploadImage/index";
 import Modal from "../../../components/Modal";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteImage, getAllImage } from "../../../store/admin/admin.action";
