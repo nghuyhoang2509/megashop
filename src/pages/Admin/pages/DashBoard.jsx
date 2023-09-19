@@ -15,9 +15,9 @@ import {
   getAllProduct,
 } from "../../../store/product/product.action";
 import { getAllOrder, getAllUser } from "../../../store/admin/admin.action";
-import CanvasJSReact from "@canvasjs/react-charts";
+/* import CanvasJSReact from "@canvasjs/react-charts";
 var CanvasJS = CanvasJSReact.CanvasJS;
-var CanvasJSChart = CanvasJSReact.CanvasJSChart;
+var CanvasJSChart = CanvasJSReact.CanvasJSChart; */
 
 export default function DashBoard() {
   const dispatch = useDispatch();
@@ -146,7 +146,7 @@ export default function DashBoard() {
         </div>
       </div>
       <div className="flex-1 flex items-center mb-2">
-        <CanvasJSChart options={optionChart} />
+        {/*  <CanvasJSChart options={optionChart} /> */}
       </div>
     </div>
   );
